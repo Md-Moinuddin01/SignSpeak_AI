@@ -1,6 +1,6 @@
 # 🤟 SignSpeak AI
 
-> Breaking communication barriers with real-time Sign Language Recognition.
+> Breaking communication barriers with real time Sign Language Recognition.
 
 SignSpeak AI is an AI-powered web application that helps people with speech impairments communicate more easily. Using a device camera, the system detects hand signs in real time and converts them into readable text and spoken words.
 
