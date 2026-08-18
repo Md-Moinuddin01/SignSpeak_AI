@@ -52,3 +52,4 @@ The goal of this project is to create a bridge between sign language users and p
 * User data is not shared with third parties.
 
 ---
+Signspeak gud
