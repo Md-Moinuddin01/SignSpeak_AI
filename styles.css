@@ -122,14 +122,25 @@ a {
   white-space: nowrap;
 }
 
-.brand-mark {
-  display: inline-grid;
+.brand-logo {
+  display: block;
   width: 2.5rem;
   height: 2.5rem;
-  place-items: center;
   border-radius: var(--radius);
-  background: var(--accent);
-  color: #ffffff;
+  flex-shrink: 0;
+}
+
+.brand-logo.small {
+  width: 1.75rem;
+  height: 1.75rem;
+}
+
+.footer-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  font-weight: 800;
+  color: var(--text);
 }
 
 .nav-links {
@@ -623,6 +634,197 @@ h3 {
   margin: 0.5rem 0 0;
   color: var(--muted);
   font-size: 1.1rem;
+}
+
+.practice-toolbar {
+  width: min(100%, var(--max-width));
+  margin: 0 auto 1.25rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.85rem;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.practice-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+}
+
+.practice-stats {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.practice-chip.is-practiced:not(.is-selected) {
+  border-color: color-mix(in srgb, var(--success) 55%, var(--border));
+  background: color-mix(in srgb, var(--success) 10%, var(--surface));
+}
+
+.practice-live-box {
+  margin-top: 0.75rem;
+  padding: 0.65rem 0.85rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface-strong);
+  color: var(--text);
+  font-size: 0.94rem;
+  font-weight: 700;
+}
+
+.practice-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 0.9rem;
+}
+
+.practice-util-btn {
+  min-height: 2.45rem;
+  padding: 0.45rem 0.85rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+  color: var(--text);
+  font-size: 0.88rem;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.practice-util-btn.primary {
+  border-color: var(--accent);
+  background: var(--accent);
+  color: #ffffff;
+}
+
+.practice-util-btn:hover {
+  border-color: var(--accent);
+}
+
+.practice-auto-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.88rem;
+  font-weight: 800;
+  color: var(--muted);
+  cursor: pointer;
+}
+
+.practice-auto-toggle input {
+  width: 1.05rem;
+  height: 1.05rem;
+  accent-color: var(--accent);
+}
+
+.creator-card {
+  margin-top: 1.4rem;
+  padding: 1rem 1.15rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface-strong);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.85rem 1.5rem;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.creator-card strong {
+  display: block;
+  font-size: 1.15rem;
+  color: var(--text);
+}
+
+.creator-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem 1.2rem;
+  font-weight: 800;
+  color: var(--accent);
+}
+
+.practice-hint {
+  font-size: 0.96rem !important;
+  color: var(--accent) !important;
+  font-weight: 700;
+}
+
+.library-toolbar {
+  width: min(100%, var(--max-width));
+  margin: 0 auto 1.25rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.85rem;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.library-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+}
+
+.filter-chip {
+  min-height: 2.35rem;
+  padding: 0.45rem 0.8rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+  color: var(--text);
+  font-size: 0.9rem;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.filter-chip.is-selected {
+  border-color: var(--accent);
+  background: var(--accent);
+  color: #ffffff;
+}
+
+.library-search {
+  min-width: min(100%, 280px);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+  color: var(--text);
+  padding: 0.65rem 0.95rem;
+}
+
+.card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.6rem;
+  margin-top: 0.85rem;
+}
+
+.card-footer .library-badge {
+  margin-top: 0;
+}
+
+.practice-link-btn {
+  min-height: 1.9rem;
+  padding: 0.3rem 0.7rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface-strong);
+  color: var(--accent);
+  font-size: 0.82rem;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.practice-link-btn:hover {
+  border-color: var(--accent);
+  background: var(--accent);
+  color: #ffffff;
 }
 
 .practice-result.correct {
