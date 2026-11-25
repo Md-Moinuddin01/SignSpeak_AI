@@ -8,18 +8,26 @@
       content="SignSpeak AI translates simple hand signs into text and voice using your camera, MediaPipe Hands, and the Web Speech API."
     />
     <title>SignSpeak AI | Real-time sign to text and voice</title>
+    <link rel="icon" type="image/svg+xml" href="assets/signspeak-logo.svg" />
+    <link rel="preload" href="assets/signspeak-logo.svg" as="image" />
     <link rel="preload" href="assets/signspeak-hero.png" as="image" />
-    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="styles.css?v=4" />
     <script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.js" defer></script>
     <script src="https://cdn.jsdelivr.net/npm/@mediapipe/drawing_utils/drawing_utils.js" defer></script>
-    <script src="app.js" defer></script>
+    <script src="app.js?v=4" defer></script>
   </head>
   <body>
     <a class="skip-link" href="#live-detection">Skip to live sign detection</a>
 
     <header class="site-header" aria-label="Main navigation">
       <a class="brand" href="#home" aria-label="SignSpeak AI home">
-        <span class="brand-mark" aria-hidden="true">SS</span>
+        <img
+          class="brand-logo"
+          src="assets/signspeak-logo.svg"
+          alt="SignSpeak AI logo"
+          width="40"
+          height="40"
+        />
         <span>SignSpeak AI</span>
       </a>
       <nav class="nav-links" aria-label="Page sections">
@@ -135,11 +143,10 @@
             </div>
 
             <div class="helper-note">
-              <strong>Beginner-friendly prototype</strong>
+              <strong>Real-time two-hand sign detection</strong>
               <span>
-                This browser demo recognizes a starter set of clear hand shapes and lets you map
-                them to personal responses. Full sign-language interpretation needs a trained
-                language model and broader testing.
+                Tracks one or both hands in real time, recognizes all 33 library hand signs, and
+                lets you map any hand shape to your own personal responses.
               </span>
             </div>
           </aside>
@@ -149,11 +156,20 @@
       <section class="section practice-section" id="practice" aria-labelledby="practiceTitle">
         <div class="section-heading">
           <p class="eyebrow">Practice Mode</p>
-          <h2 id="practiceTitle">Choose a sign, then show it to the camera.</h2>
+          <h2 id="practiceTitle">Practice all 33 signs with one or both hands.</h2>
           <p>
-            Practice at your own pace. The result updates when the camera sees a matching hand
-            shape from the detectable starter set.
+            Pick any sign, filter by category, or jump to a random challenge. The camera detects
+            all 33 signs live in real time and tracks your practice progress.
           </p>
+        </div>
+
+        <div class="practice-toolbar">
+          <div class="practice-filters" id="practiceFilters" aria-label="Filter practice signs"></div>
+          <div class="practice-stats">
+            <span class="status-pill ready" id="practiceProgress">Practiced: 0 / 33</span>
+            <span class="status-pill soft" id="practiceStreak">Streak: 0</span>
+            <button class="practice-util-btn" id="resetPracticeBtn" type="button">Reset</button>
+          </div>
         </div>
 
         <div class="practice-layout">
@@ -162,7 +178,26 @@
           <div class="practice-result" aria-live="polite">
             <span class="label">Selected sign</span>
             <strong id="selectedPractice">Hello</strong>
+            <p class="practice-hint" id="practiceHint"></p>
             <p id="practiceResult">Start the camera and show Hello.</p>
+            <div class="practice-live-box" id="practiceLiveDetected">
+              Live camera: Waiting for sign...
+            </div>
+            <div class="practice-actions">
+              <button class="practice-util-btn primary" id="nextPracticeBtn" type="button">
+                Next Sign
+              </button>
+              <button class="practice-util-btn" id="randomPracticeBtn" type="button">
+                Random
+              </button>
+              <button class="practice-util-btn" id="speakPracticeBtn" type="button">
+                Speak
+              </button>
+              <label class="practice-auto-toggle">
+                <input id="autoAdvancePractice" type="checkbox" />
+                <span>Auto-next</span>
+              </label>
+            </div>
           </div>
         </div>
       </section>
@@ -217,11 +252,22 @@
       <section class="section library-section" id="library" aria-labelledby="libraryTitle">
         <div class="section-heading">
           <p class="eyebrow">Common Signs Library</p>
-          <h2 id="libraryTitle">A wider library of signs and response ideas.</h2>
+          <h2 id="libraryTitle">All 33 signs work live in your browser.</h2>
           <p>
-            Detectable signs work now with the browser hand tracker. Library responses show the
-            larger set to support when a trained sign-language model is connected.
+            Every sign below is detectable now with the browser hand tracker. Filter by category,
+            search, or click Practice on any card to try it immediately.
           </p>
+        </div>
+
+        <div class="library-toolbar">
+          <div class="library-filters" id="libraryFilters" aria-label="Filter signs by category"></div>
+          <input
+            class="library-search"
+            id="librarySearch"
+            type="search"
+            placeholder="Search signs (e.g. Water, Doctor, Cold)..."
+            aria-label="Search signs"
+          />
         </div>
 
         <div class="sign-grid" id="signLibrary" aria-label="Common signs"></div>
@@ -236,9 +282,8 @@
           <p class="eyebrow">Public Sign Intelligence</p>
           <h2 id="intelligenceTitle">Register a sign that is not available yet.</h2>
           <p>
-            Anyone can suggest a missing sign, explain what it means, and send it to the SignSpeak
-            AI team for review. Suggestions are saved in this browser and prepared as an email to
-            moin26795@gmail.com.
+            Anyone can suggest a missing sign, explain what it means, and submit it directly to
+            Arshi Khan at arshisaleem089@gmail.com. Suggestions are also saved in this browser.
           </p>
         </div>
 
@@ -308,10 +353,9 @@
               ></textarea>
             </label>
             <p class="email-note full-span">
-              Submitting opens your email app with the sign details addressed to
-              moin26795@gmail.com. Press Send in your email app to complete delivery.
+              Submitting automatically sends the sign request to Arshi Khan.
             </p>
-            <button class="button primary" type="submit">Register Sign</button>
+            <button class="button primary" id="publicSubmitBtn" type="submit">Register Sign</button>
             <p class="status-text" id="publicSignStatus" role="status" aria-live="polite"></p>
           </form>
 
@@ -339,10 +383,20 @@
               calm, direct, and forgiving so the technology feels supportive instead of demanding.
             </p>
             <p>
-              The camera is used only in your browser to find hand landmarks. The detected sign can
-              be shown as large text, mapped to a personal response, and spoken aloud through the
-              Web Speech API.
+              The camera tracks one or both hands locally in your browser to find hand landmarks.
+              Detected signs appear as large text, can be mapped to personal responses, and are
+              spoken aloud through the Web Speech API.
             </p>
+            <div class="creator-card" aria-label="Creator contact details">
+              <div>
+                <span class="label">Created &amp; Maintained by</span>
+                <strong>Arshi Khan</strong>
+              </div>
+              <div class="creator-links">
+                <a href="mailto:arshisaleem089@gmail.com">arshisaleem089@gmail.com</a>
+                <a href="tel:9424678050">9424678050</a>
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -352,15 +406,24 @@
           <p class="eyebrow">Contact / Feedback</p>
           <h2 id="feedbackTitle">Help make SignSpeak AI kinder and easier to use.</h2>
           <p>
-            Share an accessibility idea, a sign request, or a note about what would make this more
-            useful. The form opens an email draft to moin26795@gmail.com.
+            Share an accessibility idea, a sign request, or feedback. Submitting sends your name,
+            email, and message automatically to <strong>Arshi Khan</strong>
+            (<a href="mailto:arshisaleem089@gmail.com">arshisaleem089@gmail.com</a> ·
+            <a href="tel:9424678050">9424678050</a>).
           </p>
         </div>
 
         <form class="feedback-form" id="feedbackForm" novalidate>
           <label>
             Name
-            <input id="nameInput" name="name" type="text" autocomplete="name" placeholder="Your name" />
+            <input
+              id="nameInput"
+              name="name"
+              type="text"
+              autocomplete="name"
+              placeholder="Your name"
+              required
+            />
           </label>
           <label>
             Email
@@ -370,6 +433,7 @@
               type="email"
               autocomplete="email"
               placeholder="you@example.com"
+              required
             />
           </label>
           <label class="full-span">
@@ -382,15 +446,24 @@
               required
             ></textarea>
           </label>
-          <button class="button primary" type="submit">Send Feedback</button>
+          <button class="button primary" id="feedbackSubmitBtn" type="submit">Send Feedback</button>
           <p class="status-text" id="feedbackStatus" role="status" aria-live="polite"></p>
         </form>
       </section>
     </main>
 
     <footer class="site-footer">
-      <span>SignSpeak AI</span>
-      <span>Built by moinuddin | Team ILM Tech</span>
+      <span class="footer-brand">
+        <img
+          class="brand-logo small"
+          src="assets/signspeak-logo.svg"
+          alt=""
+          width="28"
+          height="28"
+        />
+        <span>SignSpeak AI</span>
+      </span>
+      <span>Built by Arshi Khan · arshisaleem089@gmail.com</span>
     </footer>
   </body>
 </html>
